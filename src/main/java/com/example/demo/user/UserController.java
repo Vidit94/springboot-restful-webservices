@@ -60,4 +60,28 @@ public class UserController {
 		}
 		userRepo.deleteById(id);
 	}
+	
+	@GetMapping("/users/{id}/posts")
+	public List<Post> reteriveAllPostOfUserId(@PathVariable int id) {
+		Optional<User> user = userRepo.findById(id);
+		if (user.isPresent()) {
+			return user.get().getPosts();		
+		} else {
+			throw new UserNotFoundException("User ID not found - " + id);
+		}
+	}
+
+	@PostMapping("/users/{id}/posts")
+	public ResponseEntity<Object> createPosts(@PathVariable int id ,@RequestBody Post post) {
+		Optional<User> userOptional = userRepo.findById(id);
+		if (userOptional.isPresent()) {
+			User user= userOptional.get();
+			post.setUser(user);
+			URI uriLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(post.getId())
+					.toUri();
+			return ResponseEntity.created(uriLocation).build();
+		} else {
+			throw new UserNotFoundException("User ID not found - " + id);
+		}
+	}
 }
