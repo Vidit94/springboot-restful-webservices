@@ -22,6 +22,7 @@ public class FilteringController {
 		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("field1","field2");
 		FilterProvider filters = new SimpleFilterProvider().addFilter("SomeBeanDynamicFilter", filter);
 		MappingJacksonValue mapping = new MappingJacksonValue(someBean);
+		mapping.setFilters(filters);
 		return mapping;
 	}
 }
