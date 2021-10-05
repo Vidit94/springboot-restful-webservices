@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.example.demo.user.UserNotFoundException;
 
+@ControllerAdvice
 public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Override
